@@ -95,14 +95,27 @@ class Trigger(object):
 # Problem 2
 class PhaseTrigger(Trigger):
     def __init__(self, phrase):
-        Trigger.__init__(self, story)
+        Trigger.__init__(self)
         self.phrase = phrase
 
-    def is_phrase_in(self, phrase):
-        if self.evaluate(phrase.lower):
+    def is_phrase_in(self, story):
+        lowerPhrase = self.phrase.lower()
+        lowerstory = story.lower()
+        punctuation = string.punctuation
+
+        for char in lowerPhrase:
+            if char in punctuation:
+                lowerPhrase = lowerPhrase.replace(char, "")
+        
+        if lowerPhrase in lowerstory:
             return True
         else:
-            return False         
+            return False
+
+       
+
+# myPhraseTrigger = PhraseTrigger("trees")
+# myPhraseTrigger.is_phrase_in("This is my cool story about TREES!!!")     
         
 
 # Problem 3
@@ -187,11 +200,12 @@ def main_thread(master):
     # A sample trigger list - you might need to change the phrases to correspond
     # to what is currently in the news
     try:
-        t1 = TitleTrigger("election")
-        t2 = DescriptionTrigger("Trump")
-        t3 = DescriptionTrigger("Clinton")
-        t4 = AndTrigger(t2, t3)
-        triggerlist = [t1, t4]
+        trigger = PhaseTrigger("election")
+        # t1 = TitleTrigger("election")
+        # t2 = DescriptionTrigger("Trump")
+        # t3 = DescriptionTrigger("Clinton")
+        # t4 = AndTrigger(t2, t3)
+        triggerlist = [trigger]#[t1, t4]
 
         # Problem 11
         # TODO: After implementing read_trigger_config, uncomment this line 
