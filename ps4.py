@@ -372,7 +372,9 @@ def find_best_shifts_rec(wordlist, text, start):
     for shift in range(27):
         # apply shift to iteration of text
         # print(text[start:])
+        message = text[:start]
         decoded_word = apply_shift(text[start:], shift)
+        words = message + decoded_word
         # find index of first instance of space in that iteration of the text
         list_of_words = decoded_word.split()
         
@@ -398,13 +400,7 @@ def find_best_shifts_rec(wordlist, text, start):
                 # Any old decoded words + cool newly-decoded word + the remaining garbage
                 # Pass it in as decoded_word below
 
-                if shift != 0:
-                    key = [(start, shift)]
-
-                result_string = text[:start] + list_of_words[0] + ' ' + decoded_word[position + 1:]
-                print(result_string)
-                key.extend(find_best_shifts_rec(wordlist, result_string, start + position + 1))
-                break
+               
                 # text needs to be modified
                 # decoding part of the text
                 # pass in the decoded part AND the undecoded part
